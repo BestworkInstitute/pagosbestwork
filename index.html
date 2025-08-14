@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Pagos - Servicios y Matrículas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2E86C1 0%, #1A5490 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            color: #2E86C1;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        .payment-section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            color: #2E86C1;
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #2E86C1;
+            font-weight: 600;
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .payment-card {
+            background: linear-gradient(145deg, #FF9500, #E6781E);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+            color: white;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            animation: cardPulse 0.6s ease-out;
+        }
+
+        @keyframes cardPulse {
+            0% {
+                transform: translateY(-5px) scale(1);
+            }
+            50% {
+                transform: translateY(-10px) scale(1.02);
+            }
+            100% {
+                transform: translateY(-8px) scale(1);
+            }
+        }
+
+        .service-name {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .price {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .payment-button {
+            width: 100%;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #27ae60, #1e8449);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .payment-button:hover {
+            background: linear-gradient(135deg, #1e8449, #186a3b);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(39, 174, 96, 0.4);
+        }
+
+        .flow-button {
+            background: linear-gradient(135deg, #27ae60, #1e8449);
+        }
+
+        .flow-button:hover {
+            background: linear-gradient(135deg, #1e8449, #186a3b);
+            box-shadow: 0 6px 15px rgba(39, 174, 96, 0.4);
+        }
+
+        .webpay-logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .flow-logo {
+            width: 60px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .provider-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .webpay-badge {
+            background: #e3f2fd;
+            color: #2E86C1;
+        }
+
+        .flow-badge {
+            background: #e8f5e8;
+            color: #27ae60;
+        }
+
+        .special-services {
+            background: none;
+            color: inherit;
+        }
+
+        .special-services .section-title {
+            color: #2E86C1;
+            border-bottom-color: #2E86C1;
+        }
+
+        .special-card {
+            background: linear-gradient(145deg, #FF9500, #E6781E);
+            border: 1px solid rgba(255, 149, 0, 0.3);
+            color: white;
+        }
+
+        .special-card .service-name,
+        .special-card .price {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .payment-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-card {
+                padding: 20px;
+            }
+        }
+
+        .info-banner {
+            background: linear-gradient(135deg, #27ae60, #1e8449);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .info-banner h3 {
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+
+        .info-banner p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💳 Centro de Pagos Bestwork</h1>
+            <p>Servicios y Matrículas - Pagos Seguros Online</p>
+        </div>
+
+        <div class="info-banner">
+            <h3>🔒 Pagos 100% Seguros</h3>
+            <p>Todos nuestros pagos están protegidos con encriptación SSL y procesados por plataformas certificadas</p>
+        </div>
+
+        <!-- Servicios Especiales -->
+        <div class="payment-section special-services">
+            <h2 class="section-title">✨ Pago Matrícula</h2>
+            <div class="payment-grid">
+                <div class="payment-card special-card">
+                    <div class="service-name">Matrícula Premium</div>
+                    <div class="price">$45,000</div>
+                    <button class="payment-button" onclick="copyToClipboard('https://www.webpay.cl/form-pay/297536')">
+                        Copiar Link WebPay
+                    </button>
+                </div>
+                
+                <div class="payment-card special-card">
+                    <div class="service-name">Matrícula Medium</div>
+                    <div class="price">$39,990</div>
+                    <button class="payment-button" onclick="copyToClipboard('https://www.webpay.cl/form-pay/297972')">
+                        Copiar Link WebPay
+                    </button>
+                </div>
+                
+                <div class="payment-card special-card">
+                    <div class="service-name">Matrícula Standard</div>
+                    <div class="price">$29,990</div>
+                    <button class="payment-button" onclick="copyToClipboard('https://www.webpay.cl/form-pay/297971')">
+                        Copiar Link WebPay
+                    </button>
+                </div>
+                
+                <div class="payment-card special-card">
+                    <div class="service-name">Matrícula Basic</div>
+                    <div class="price">$20,000</div>
+                    <button class="payment-button" onclick="copyToClipboard('https://www.webpay.cl/form-pay/297968')">
+                        Copiar Link WebPay
+                    </button>
+                </div>
+                
+                
+            </div>
+        </div>
+
+        <!-- Bestwork WebPay -->
+        <div class="payment-section">
+            <h2 class="section-title">💼 Bestwork - Pagos WebPay</h2>
+            <div class="payment-grid">
+                <div class="payment-card">
+                    <div class="provider-badge webpay-badge">WebPay</div>
+                    <div class="service-name">Oral Placement</div>
+                    <div class="price">$20,000</div>
+                    <button class="payment-button" onclick="copyToClipboard('https://www.webpay.cl/form-pay/309293')">
+                        Copiar Link WebPay
+                    </button>
+                </div>
+                
+                <div class="payment-card">
+                    <div class="provider-badge webpay-badge">WebPay</div>
+                    <div class="service-name">Bestwork 1 LevelPlus</div>
+                    <div class="price">$199,990</div>
+                    <button class="payment-button" onclick="copyToClipboard('https://www.webpay.cl/form-pay/309293')">
+                        Copiar Link WebPay
+                    </button>
+                </div>
+
+                <div class="payment-card">
+                    <div class="provider-badge webpay-badge">WebPay</div>
+                    <div class="service-name">Bestwork 2 LevelPlus</div>
+                    <div class="price">$359,990</div>
+                    <button class="payment-button" onclick="copyToClipboard('https://www.webpay.cl/form-pay/309296', '_blank')">
+                        Copiar Link WebPay
+                    </button>
+                </div>
+                
+                <div class="payment-card">
+                    <div class="provider-badge webpay-badge">WebPay</div>
+                    <div class="service-name">Bestwork LevelUp</div>
+                    <div class="price">$290,400</div>
+                    <button class="payment-button" onclick="copyToClipboard('https://www.webpay.cl/form-pay/309298', '_blank')">
+                        Copiar Link WebPay
+                    </button>
+                </div>
+                
+                <div class="payment-card">
+                    <div class="provider-badge webpay-badge">WebPay</div>
+                    <div class="service-name">Bestwork 4 LevelPlus</div>
+                    <div class="price">$564,000</div>
+                    <button class="payment-button" onclick="copyToClipboard('https://www.webpay.cl/form-pay/309301', '_blank')">
+                        Copiar Link WebPay
+                    </button>
+                </div>
+                
+                <div class="payment-card">
+                    <div class="provider-badge webpay-badge">WebPay</div>
+                    <div class="service-name">Bestwork 6 LevelPlus</div>
+                    <div class="price">$799,990</div>
+                    <button class="payment-button" onclick="copyToClipboard('https://www.webpay.cl/form-pay/309304', '_blank')">
+                        Copiar Link WebPay
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bestwork Flow -->
+        <div class="payment-section">
+            <h2 class="section-title">🌊 Bestwork - Pagos Flow</h2>
+            <div class="payment-grid">
+                <div class="payment-card">
+                    <div class="provider-badge flow-badge">Flow</div>
+                    <div class="service-name">Bestwork 1 LevelPlus</div>
+                    <div class="price">$159,992</div>
+                    <button class="payment-button" onclick="copyToClipboard('https://www.flow.cl/btn.php?token=v46af58ac86f7be80fe56ef31c555f3bf98cd9c9')">
+                        Copiar Link Flow
+                    </button>
+                </div>
+                
+                <div class="payment-card">
+                    <div class="provider-badge flow-badge">Flow</div>
+                    <div class="service-name">Bestwork 2 LevelPlus</div>
+                    <div class="price">$287,992</div>
+                    <button class="payment-button" onclick="copyToClipboard('https://www.flow.cl/app/web/pagarBtnPago.php?token=v46af58ac86f7be80fe56ef31c555f3bf98cd9c9')">
+                        Copiar Link Flow
+                    </button>
+                </div>
+                
+                <div class="payment-card">
+                    <div class="provider-badge flow-badge">Flow</div>
+                    <div class="service-name">Bestwork 4 LevelPlus</div>
+                    <div class="price">$455,992</div>
+                    <button class="payment-button" onclick="copyToClipboard('https://www.flow.cl/app/web/pagarBtnPago.php?token=aaec9273b436da0fe30d400d8f3abea84214f5fd')">
+                        Copiar Link Flow
+                    </button>
+                </div>
+                
+                <div class="payment-card">
+                    <div class="provider-badge flow-badge">Flow</div>
+                    <div class="service-name">Bestwork 6 LevelPlus</div>
+                    <div class="price">$639,992</div>
+                    <button class="payment-button" onclick="copyToClipboard('https://www.flow.cl/app/web/pagarBtnPago.php?token=k261363d0c75ea5ae80a090b9985fa15fa4bd565')">
+                        Copiar Link Flow
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; padding-top: 25px; border-top: 2px solid #ecf0f1;">
+            <p style="color: #7f8c8d; font-size: 0.85rem;">
+                📋 Haz clic en cualquier botón para copiar el link de pago<br>
+                🔐 Todos los pagos son procesados de forma segura<br>
+                📧 Recibirás una confirmación por email después del pago
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Función para copiar al portapapeles
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                // Crear notificación visual
+                const notification = document.createElement('div');
+                notification.style.position = 'fixed';
+                notification.style.top = '20px';
+                notification.style.right = '20px';
+                notification.style.background = '#27ae60';
+                notification.style.color = 'white';
+                notification.style.padding = '15px 20px';
+                notification.style.borderRadius = '8px';
+                notification.style.fontWeight = '600';
+                notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                notification.style.zIndex = '1000';
+                notification.style.transform = 'translateX(100%)';
+                notification.style.transition = 'transform 0.3s ease';
+                notification.innerHTML = '✅ Link copiado al portapapeles';
+                
+                document.body.appendChild(notification);
+                
+                // Animar entrada
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(0)';
+                }, 100);
+                
+                // Remover después de 3 segundos
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+                
+            }).catch(function(err) {
+                console.error('Error al copiar: ', err);
+                alert('Link copiado: ' + text);
+            });
+        }
+
+        // Efecto de animación suave al cargar
+        window.addEventListener('load', function() {
+            const cards = document.querySelectorAll('.payment-card');
+            cards.forEach((card, index) => {
+                // Inicialmente invisible
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease';
+                
+                // Animar con delay escalonado
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 150);
+            });
+        });
+
+        // Efecto adicional de "respiración" en hover
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.payment-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                    this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                    this.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                });
+            });
+        });
+
+        // Efecto de partículas en el fondo (opcional)
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.width = '4px';
+            particle.style.height = '4px';
+            particle.style.background = 'rgba(255, 255, 255, 0.5)';
+            particle.style.borderRadius = '50%';
+            particle.style.pointerEvents = 'none';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.top = '-10px';
+            particle.style.zIndex = '-1';
+            
+            document.body.appendChild(particle);
+            
+            const duration = Math.random() * 3000 + 2000;
+            particle.animate([
+                { transform: 'translateY(-10px)', opacity: 0 },
+                { transform: 'translateY(100vh)', opacity: 1 }
+            ], {
+                duration: duration,
+                easing: 'linear'
+            }).onfinish = () => particle.remove();
+        }
+
+        // Crear partículas cada 500ms
+        setInterval(createParticle, 500);
+    </script>
+</body>
+</html>
